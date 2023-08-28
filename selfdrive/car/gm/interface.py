@@ -34,8 +34,8 @@ class CarInterface(CarInterfaceBase):
     params = CarControllerParams(CP)
     v_current_kph = current_speed * CV.MS_TO_KPH
     # return params.ACCEL_MIN, params.ACCEL_MAX
-    accel_max_bp = [10., 20., 50.]
-    accel_max_v = [1.45, 1.425, 1.35]
+    accel_max_bp = [10., 20., 30., 50., 70., 80.] #=> [10., 20., 50.] (Fast)
+    accel_max_v = [0.9, 1.0, 0.85, 0.82, 0.9, 0.95] #=> [0.9, 1.0, 0.95] (Fast and Strong)
 
     return params.ACCEL_MIN, interp(v_current_kph, accel_max_bp, accel_max_v)
 
@@ -158,14 +158,14 @@ class CarInterface(CarInterfaceBase):
     else:
       ret.lateralTuning.init('torque')
       ret.lateralTuning.torque.useSteeringAngle = True
-      max_lat_accel = 2.15
-      ret.lateralTuning.torque.kp = 2.0 / max_lat_accel
+      max_lat_accel = 2.35
+      ret.lateralTuning.torque.kp = 1.0 / max_lat_accel
       ret.lateralTuning.torque.kf = 1.0 / max_lat_accel
-      ret.lateralTuning.torque.ki = 0.2 / max_lat_accel
-      ret.lateralTuning.torque.friction = 0.02
+      ret.lateralTuning.torque.ki = 0.1 / max_lat_accel
+      ret.lateralTuning.torque.friction = 0.175
 
       ret.lateralTuning.torque.kd = 1.0
-      ret.lateralTuning.torque.deadzone = 0.01
+      ret.lateralTuning.torque.deadzone = 0.03
 
 
     # TODO: get actual value, for now starting with reasonable value for
@@ -178,24 +178,20 @@ class CarInterface(CarInterfaceBase):
                                                                          tire_stiffness_factor=tire_stiffness_factor)
 
     # longitudinal
-    ret.longitudinalTuning.kpBP = [0., 25.*CV.KPH_TO_MS, 100.*CV.KPH_TO_MS]
-    ret.longitudinalTuning.kpV = [1.35, 1.20, 0.65] # when 40 => 1.09, y = 1.38333 - 0.00733333 x,  till 1.20~0.65,
-    # ret.longitudinalTuning.kpV = [1.35, 1.20, 1.125, 0.65]   #but slightly cover up to 1.125
-  
-    ret.longitudinalTuning.kiBP = [0.,25. * CV.KPH_TO_MS , 130. * CV.KPH_TO_MS]
-    ret.longitudinalTuning.kiV = [0.18,0.13, 0.10]
-    
+    ret.longitudinalTuning.kpBP = [0., 18.0 * CV.KPH_TO_MS, 80.0 * CV.KPH_TO_MS] #[0., 18.0 * CV.KPH_TO_MS, 40.0 * CV.KPH_TO_MS, 80. * CV.KPH_TO_MS]
+    ret.longitudinalTuning.kpV = [1.10, 1.0, 0.76] #[1.20, 1.0, 0.76], [1.16, 1.1, 0.76]=>good ==> [1.18, 1.17, 1.0, 0.76]
+    ret.longitudinalTuning.kiBP = [0., 18.0 * CV.KPH_TO_MS, 80.0 * CV.KPH_TO_MS] #[0., 18.0 * CV.KPH_TO_MS, 40.0 * CV.KPH_TO_MS, 80. * CV.KPH_TO_MS]
+    ret.longitudinalTuning.kiV = [0.140, 0.125, 0.115] #[0.140,0.125,0.115], [0.135, 0.130, 0.115]=> good ==> [0.140, 0.135, 0.130, 0.115]
+     
     ret.longitudinalTuning.deadzoneBP = [0., 30.*CV.KPH_TO_MS]
     ret.longitudinalTuning.deadzoneV = [0., 0.10]
-    ret.longitudinalActuatorDelayLowerBound = 0.13
-    ret.longitudinalActuatorDelayUpperBound = 0.15
+    ret.longitudinalActuatorDelayLowerBound = 0.12 #0.13
+    ret.longitudinalActuatorDelayUpperBound = 0.50 #0.45
     
-    # ret.startAccel = -0.8 #### REMOVED
-    ret.stopAccel = -2.0
-    # ret.startingAccelRate = 5.0 #### REMOVED
+    ret.stopAccel = -2.3 #-2.2
     ret.stoppingDecelRate = 4.0
-    ret.vEgoStopping = 0.5
-    ret.vEgoStarting = 0.5
+    ret.vEgoStopping = 1.1 #1.0
+    ret.vEgoStarting = 0.24 #0.23(good)
     ret.stoppingControl = True
     
     ret.steerLimitTimer = 0.4
