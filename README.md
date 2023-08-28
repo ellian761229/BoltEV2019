@@ -3,6 +3,7 @@
 # 항상 전방을 주시하시고 안전 운전에 만전을 기해주시기 바랍니다.
 # 이 버전의 원위치는 
 # https://github.com/sunnyc-op/openpilot/tree/bolt_0814_eon
+
 # 오픈파일럿 비전문가^^;;  DS5AJD 분주한호랑이 백
 
 
