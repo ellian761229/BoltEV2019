@@ -1,7 +1,7 @@
 # 양민님, 태하님 버전을 기반으로 longitudinal control 부분을 
 # 제 상황에 맞게 튜닝하여 만든 구형볼트용 0814 마지막 버전입니다.
 # 항상 전방을 주시하시고 안전 운전에 만전을 기해주시기 바랍니다.
-
+# 이 버전의 원위치는 https://github.com/sunnyc-op/openpilot/tree/bolt_0814_eon
 # 오픈파일럿 비전문가^^;;  DS5AJD 분주한호랑이 백
 
 
